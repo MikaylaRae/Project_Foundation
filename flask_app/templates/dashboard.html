@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <script src="static/js/index.js"></script>
+    <script src="https://kit.fontawesome.com/f6dcf461c1.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body style="font-family: tahoma; background-color: #d0d8ef">
+
+
+
+    <br>
+    <!-- top bar -->
+    <div id="top_bar">
+        <div style="width: 800px; margin: auto; font-size:30px;">
+            TechSpace &nbsp; &nbsp; <input type="text" id="search_box" placeholder="Just for show...">
+            <a href="/logout" id="logout_button">Logout</a>
+            <a href="/new/profile" id="profile_button"> Add a Profile</a>
+        </div>
+    </div>
+
+    <!-- profile images-->
+    <div style="width: 800px; margin:auto; min-height: 400px;">
+        <div style="background-color: white; text-align: center; color: #405d9b;">
+            <img src="static/img/background4.jpeg" alt="" style="width: 100%;">
+            <img id="profile_pic" src="static/img/selfie2.jpeg" alt="">
+            <!-- image path for profile selfie -->
+            <h3 class="profile_name">{{user.first_name}} {{user.last_name}} </h3>
+            <br>
+            <!--white space-->
+        </div>
+    
+    <!-- below cover area -->   
+    <div style="display:flex;">
+
+        <!-- {% for user in users %}
+
+        {{user.first_name}}
+
+        {% endfor %} -->
+        <!-- friends area  -->
+        <div style="min-height: 400px; flex: 1;">
+            <div id="friends_bar"> 
+                Friends <br>
+                <div id="friends">
+                    <img id="friends_img" src="static/img/user1m.jpeg" alt="">
+                    <br>
+                    Jeffrey Wright
+                </div>
+
+                <div id="friends">
+                    <img id="friends_img" src="static/img/user6.webp" alt="">
+                    <br>
+                    Joel Miller
+                </div>
+
+                <div id="friends">
+                    <img id="friends_img" src="static/img/user5.jpeg" alt="">
+                    <br>
+                    Normani Hamilton
+                </div>
+
+                <div id="friends">
+                    <img id="friends_img" src="static/img/user4img.jpg" alt="">
+                    <br>
+                    Katie Leung
+                </div>
+
+            </div>       
+        </div>
+
+        <!-- posts area  -->
+        <!-- submit your post area  -->
+        <div style="min-height: 400px; flex:2.5; padding: 20px; padding-right: 0px;">
+            <form action="/add/post" method="post">
+
+                <!-- add stuff in here -->
+
+                <div style="border: solid thin #aaa; padding: 10px; background-color: white;">
+                    
+                    <textarea name="content" for="content" id="post_textarea" cols="30" rows="10" placeholder="What do you want to share..."></textarea>
+                    <input id="post_button" type="submit" value="Post">
+                    <!-- Author Not Shown/Not In Use anymore-->
+                    <label for="author" style="font-weight: bold; color: #405db6; display: none; font-size: 13px; font-family: tahoma;">Author:</label>
+                    <input type="text" style="display: none;" name="author" placeholder="delete this" value="">
+                    <br>
+                </div>
+
+            </form>
+                
+        
+            <!-- everyone's posts / table? loop-->
+            <div id="post_bar">
+                {% for post in posts %}
+                    <div id="post">
+                        <div>
+                            <img src="static/img/usericon.jpeg"  style=" width: 75px" alt="">
+                        </div>
+
+                        <div>
+                            {% if post.user.id == session.user_id%}
+                                <div style="font-weight: bold;"> <a href="/profile/{{post.user.id}}" style="text-decoration: none; color: #405db6;">You</a></div> <br>
+                            {% else %}
+                            <div style="font-weight: bold; "> <a href="/profile/{{post.user.id}}" style="text-decoration: none; color: #405db6;">{{post.user.username}}</a></div> <br>
+                            {% endif %}
+
+                            {{post.content}}
+                            <br><br>
+                            <!-- HEARTBUTTON -->
+                            <button id="btnh1" class="btn" onclick="toggleColor(this)"> <i class="fas fa-heart"></i> </button>
+
+                            <!-- OnClick Method for Reply Box -->
+                            <button onclick="myFunction('myDiv{{post.id}}')">Reply</button>
+
+
+                            {% if post.user.id == session.user_id %}
+                                <a href="/edit/post/{{post.id}}" style="text-decoration: none; color: #405db6;" > Edit </a> |
+                                <a href="/destroy/post/{{post.id}}" style="text-decoration: none; color: #405db6;" > Delete</a> |
+                            {% endif %}
+
+                            <!-- CREATE/UPDATE DATE -->
+                            <span style="color: #999"> Created 8 days ago</span>
+
+                            <!-- REPLY BOX SHOULD APPEAR ONCLICK-->
+                            <div class="comment_container" id="myDiv{{post.id}}" style="display: none;" >
+                                <form action='/add/comment' method="post">
+                                    <textarea name="content" for="content"  placeholder='Leave a comment'></textarea>
+                
+                                    <div>
+                                        <input type="hidden" value="{{post.id}}" name="post_id">
+                                        <input type="submit" value='Comment'>
+                                        <button> <a href="/dashboard">Cancel</a></button>
+                                    </div>            
+                                </form>
+                
+                            </div> 
+                            <div class="Reply">
+                        
+                                    {%for comment in post.comments%}
+                                        <div class="comment_container">
+                                            <div class="comment_card">
+                                                <h3 class="comment_title" style="font-size: 14px; color: #405db6;"> {{comment.user.username}}</h3>
+                                                <p> {{comment.content}}</p>
+                                                <!-- {% if comment.user.id == session.user_id%} -->
+                                                <div class="comment_footer">
+                                                    <a href="/destroy/comment/{{comment.id}}">Delete</a>
+                                                </div>
+                                                <!-- {% endif %} -->
+                                            </div>
+                                        </div>
+                                    {%endfor%}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div> 
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

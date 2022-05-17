@@ -60,7 +60,8 @@ class Profile:
 
     @classmethod
     def update(cls, data):
-        query = "UPDATE profiles SET about_me=%(about_me)s;"
+        print('************, data=', data)
+        query = "UPDATE profiles SET about_me = %(about_me)s, job_title = %(job_title)s WHERE user_id = %(id)s;" 
         return connectToMySQL(cls.db_name).query_db(query,data)
     
     
@@ -77,5 +78,5 @@ class Profile:
             flash("Job Title must be at least 3 characters","profile")
         if len(profile['about_me']) < 3:
             is_valid = False
-            flash("Your about me must be at least 3 characters","profile")
+            flash("Tell us about yourself in 3 words or more","profile")
         return is_valid

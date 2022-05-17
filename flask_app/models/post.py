@@ -84,6 +84,6 @@ class Post:
         is_valid = True
         if len(post['content']) < 3:
             is_valid = False
-            flash("Description must be at least 3 characters","post")
+            flash("Your post must be at least 3 characters","post")
         return is_valid
     

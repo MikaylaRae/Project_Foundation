@@ -3,13 +3,13 @@ from flask_app import app
 from flask_app.models.post import Post 
 from flask_app.models.user import User 
 
-@app.route('/new/post')
-def new_post(): 
-    if "user_id" not in session:
-        return redirect ('/logout')
-    data = { "id": session ['user_id']
-    }
-    return render_template("new_post.html", user = User.get_by_id(data))
+# @app.route('/new/post')
+# def new_post(): 
+#     if "user_id" not in session:
+#         return redirect ('/logout')
+#     data = { "id": session ['user_id']
+#     }
+#     return redirect('/dashboard')
 
 
 @app.route('/add/post', methods =['POST'])
@@ -17,7 +17,8 @@ def add_post():
     if 'user_id' not in session:
         return redirect('/logout')
     if not Post.validate_post(request.form): #check validation method 
-        return redirect ('/new/post')
+        # return redirect ('/new/post')
+        return redirect ('/dashboard')
     data = {
         "content" : request.form["content"],
         "author" : request.form["author"],
@@ -39,12 +40,12 @@ def edit_post(id):
     }
     return render_template("edit.html",edit = Post.get_one(data), user=User.get_by_id(user_data))
 
-@app.route('/update/post', methods = ['POST'])
-def update_post(): 
+@app.route('/update/post/<int:post_id>', methods = ['POST'])
+def update_post(post_id): 
     if "user_id" not in session:
         return redirect ('/logout')
     if not Post.validate_post(request.form): 
-        return redirect('new/post')
+        return redirect(f'/edit/post/{post_id}')
     data = {
         "content": request.form["content"],
         "id":request.form["id"]

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Your Post</title>
+    <title>Edit Your Profile</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body style="background-color: #4f4f51">
@@ -16,11 +16,12 @@
                 <a href="/logout" class="btn btn-danger my-2 col-4" style="background-color: #d6d6d6; border: none; color: #4f4f51;">Logout</a>
             </div>
     </nav>
-
+  {{edit.user_id}}
     </nav>
-    <form action="/update/post/{{edit.id}}" method="post" class="col-8 p-4 my-4 mx-auto" style="background-color: #2c2b30;">
-        <h2 class="text-center" style="color: #F58F7C;">Edit Your Post</h2>
-        {% with messages = get_flashed_messages(category_filter=['post']) %}
+    <form action="/update/profile/{{edit.user_id}}" method="post" class="col-8 p-4 my-4 mx-auto" style="background-color: #2c2b30;">
+        
+        <h2 class="text-center" style="color: #F58F7C;">Edit Your Profile</h2>
+        {% with messages = get_flashed_messages(category_filter=['profile']) %}
             {% if messages %}
             <div class="alert alert-danger" role="alert">
                 <strong>Flash AHHHHHHH!!!!</strong>
@@ -30,13 +31,17 @@
             </div>
             {% endif %}
         {% endwith %}
-        <!-- something is messed up here -->
+        {#<!-- something is messed up here -->#}
         <div class="d-flex justify-content-between col-8">
-            <input type="hidden" name="id" value={{edit.id}}> 
+            <input type="hidden" name="profile_id" value={{edit.user_id}}> 
                 <div class="col-8">
                     <div class="form-group">
-                        <label for="content">Post:</label>
-                        <textarea name="content" value="" cols="30" rows="10" class="form-control form-control-lg">{{edit.content}}</textarea>
+                        <label for="job_title">Job Title:</label>
+                        <input type="text" name="job_title" class="form-control form-control-lg"  value="{{edit.job_title}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="about_me">About Me:</label>
+                        <textarea name="about_me" cols="30" rows="10" class="form-control form-control-lg">{{edit.about_me}}</textarea>
                     </div>
                     <input type="submit" value="Update" class="btn" style="background-color: #F58F7C; color: #2c2b30;">
                 </div>

@@ -5,13 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
-    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="/static/css/style.css">
     <script src="static/js/index.js"></script>
     <script src="https://kit.fontawesome.com/f6dcf461c1.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
-<body style="font-family: tahoma; background-color: #d0d8ef">
+<body style=" background-color: #4f4f51">
 
 
 
@@ -19,15 +19,15 @@
     <!-- top bar -->
     <div id="top_bar">
         <div style="width: 800px; margin: auto; font-size:30px;">
-            My TechSpace &nbsp; &nbsp; <input type="text" id="search_box" placeholder="Just for show...">
+            TechSpace &nbsp; &nbsp; <input type="text" id="search_box" placeholder="Just for show...">
             <a href="/logout" id="logout_button">Logout</a>
-            <a href="/new/profile" id="profile_button"> Add a Profile</a>
+            <a href="/new/profile" id="profile_button"> + Profile</a>
         </div>
     </div>
 
     <!-- profile images-->
     <div style="width: 800px; margin:auto; min-height: 400px;">
-        <div style="background-color: white; text-align: center; color: #405d9b;">
+        <div style="background-color: white; text-align: center; color: #f5847c;">
             <img src="static/img/background4.jpeg" alt="" style="width: 100%;">
             <img id="profile_pic" src="static/img/selfie2.jpeg" alt="">
             <!-- image path for profile selfie -->
@@ -79,6 +79,16 @@
         <!-- submit your post area  -->
         <div style="min-height: 400px; flex:2.5; padding: 20px; padding-right: 0px;">
             <form action="/add/post" method="post">
+            {% with messages = get_flashed_messages(category_filter=['post']) %}
+                {% if messages %}
+            <div class="alert alert-danger" role="alert">
+                <strong>Hold On!</strong>
+                    {% for message in messages %}
+                        <p>{{message}}</p>
+                    {% endfor %}
+            </div>
+                {% endif %}
+            {% endwith %}
 
                 <!-- add stuff in here -->
 
@@ -105,9 +115,9 @@
 
                         <div>
                             {% if post.user.id == session.user_id%}
-                                <div style="font-weight: bold;"> <a href="/profile/{{post.user.id}}" style="text-decoration: none; color: #405db6;">You</a></div> <br>
+                                <div style="font-weight: bold;"> <a href="/profile/{{post.user.id}}" style="text-decoration: none; color: #f5847c;">You</a></div> <br>
                             {% else %}
-                            <div style="font-weight: bold; "> <a href="/profile/{{post.user.id}}" style="text-decoration: none; color: #405db6;">{{post.user.username}}</a></div> <br>
+                            <div style="font-weight: bold; "> <a href="/profile/{{post.user.id}}" style="text-decoration: none; color: #f5847c;">{{post.user.username}}</a></div> <br>
                             {% endif %}
 
                             {{post.content}}
@@ -120,8 +130,8 @@
 
 
                             {% if post.user.id == session.user_id %}
-                                <a href="/edit/post/{{post.id}}" style="text-decoration: none; color: #405db6;" > Edit </a> |
-                                <a href="/destroy/post/{{post.id}}" style="text-decoration: none; color: #405db6;" > Delete</a> |
+                                <a href="/edit/post/{{post.id}}" style="text-decoration: none; color: #f5847c;" > Edit </a> |
+                                <a href="/destroy/post/{{post.id}}" style="text-decoration: none; color: #4f4f51;" > Delete</a> |
                             {% endif %}
 
                             <!-- CREATE/UPDATE DATE -->
@@ -134,7 +144,7 @@
                 
                                     <div>
                                         <input type="hidden" value="{{post.id}}" name="post_id">
-                                        <input type="submit" value='Comment'>
+                                        <input type="submit" value='Comment' style="background-color: #f58f7c;">
                                         <button> <a href="/dashboard">Cancel</a></button>
                                     </div>            
                                 </form>
@@ -145,11 +155,15 @@
                                     {%for comment in post.comments%}
                                         <div class="comment_container">
                                             <div class="comment_card">
-                                                <h3 class="comment_title" style="font-size: 14px; color: #405db6;"> {{comment.user.username}}</h3>
+                                                {% if comment.user.id != session.user_id%}
+                                                    <h3 class="comment_title" style="font-size: 14px; color: #2c2b30;"> {{comment.user.username}}</h3>
+                                                {% else %}
+                                                    <h3 class="comment_title" style="font-size: 14px; color: #2c2b30;"> You</h3>
+                                                {% endif %}
                                                 <p> {{comment.content}}</p>
                                                 <!-- {% if comment.user.id == session.user_id%} -->
                                                 <div class="comment_footer">
-                                                    <a href="/destroy/comment/{{comment.id}}">Delete</a>
+                                                    <a href="/destroy/comment/{{comment.id}}" style=" text-decoration: none; color: #2c2b30;">Delete</a>
                                                 </div>
                                                 <!-- {% endif %} -->
                                             </div>

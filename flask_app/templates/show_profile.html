@@ -4,14 +4,27 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/profile.css">
     <title>Show My Profile</title>
 </head>
 <body>
-    <!-- {% if profile.user_id == session.user_id %}
-        {{profile.user.username}}
-    {% endif %} -->
-    <h1>{{profile.about_me}}</h1>
-    <h1>{{profile.job_title}}</h1>
+    <div class="container">
+        <h1>About Me</h1>
+
+        <h2>{{profile.job_title}}</h2>
+        <p>
+            {{profile.about_me}}
+        </p>
+        <a href="/dashboard" class="btn" id="dashboard_button"> Dashboard</a>
+
+        {% if profile.user_id == session.user_id %}
+            <a href="/edit/profile/{{profile.user_id}}" class="btn" id="edit_button">Edit</a>
+        {% endif %}
+    </div>
+    
+    
 
 </body>
 </html>
+
+

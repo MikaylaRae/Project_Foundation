@@ -4,14 +4,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index</title>
+    <title>Login and Registration</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" href="static/css/log_reg.css">
 </head>
 <body>
+
+
     <section class="h-100 h-custom gradient-custom-2" >
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
-                <h1 class="my-5">TechSpace
+                <h1 class="my-5" id="title">TechSpace
                 </h1>
                 <div class="col-12">
                     <div class="card card-registration card-registration-2" style="border-radius: 15px;">
@@ -21,7 +25,7 @@
                                     <div class="p-5">
                                         <!-- Registration -->
                                         <form action="/register" method="post" class=>
-                                            <h2 class="fw-normal mb-5" style="color: black;">Register</h2>
+                                            <h2 class="fw-normal mb-5"  id="register_title">Register</h2>
                                             {% with messages = get_flashed_messages(category_filter=['register']) %}
                                                 {% if messages %}
                                                 <div class="alert alert-danger" role="alert">                                                   
@@ -33,40 +37,38 @@
                                             {% endwith %}
 
                                                 <div class="row">
-                                                    <div class="col-md-6 mb-4 pb-2">                                                        
+                                                    <div class="col-md-10 mb-4 pb-2">                                                        
                                                         <div class="form-group form-outline">
-                                                            <input type="text" name="first_name" class="form-control form-control-lg">
-                                                            <label for="first_name">First Name:</label>
+                                                            <input type="text" name="first_name" placeholder="Enter your first name" class="form-control ">
                                                         </div>
                                                         
                                                         <div class="form-group form-outline">
-                                                            <input type="text" name="last_name" class="form-control form-control-lg">
-                                                            <label for="last_name">Last Name:</label>
+                                                            <input type="text" name="last_name" placeholder="Enter your last name" class="form-control">
+                                    
                                                         </div>
                                                         <div class="form-group form-outline">
-                                                            <input type="text" name="username" class="form-control form-control-lg">
-                                                            <label for="username">Username:</label>
+                                                            <input type="text" name="username" placeholder="Choose a username" class="form-control">
+                                                            
                                                         </div>
                                                     </div>                                                
                                                 </div>
 
                                                 <div class="mb-4 pb-2">                                                   
                                                     <div class="form-group form-outline">
-                                                        <input type="text" name="email" class="form-control form-control-lg">
-                                                        <label for="email">Email:</label>
+                                                        <input type="text" name="email" placeholder= "Enter your email"class="form-control">
                                                     </div>
                                                 </div>
 
                                                 <div class="mb-4 pb-2 mb-md-0 pb-md-0">
                                                     <div class="mb-4">
                                                         <div class="form-group form-outline">
-                                                            <input type="password" name="password" class="form-control form-control-lg">
-                                                            <label for="password">Password:</label>
+                                                            <input type="password" name="password" placeholder="Enter password" class="form-control">
+
                                                         </div>
                                                     </div>
                                                         <div class="form-group form-outline">
-                                                            <input type="password" name="confirm" class="form-control form-control-lg">
-                                                            <label for="confirm">Confirm Password:</label>
+                                                            <input type="password" name="confirm" placeholder="Confirm password" class="form-control">
+
                                                         </div>
                                                 </div>          
                                             <input type="submit" value="Register" class="btn btn-primary">
@@ -74,11 +76,10 @@
                                     </div>
                                 </div>  
                                 
-                                
                                 <!-- Login Information -->
                                 <form action="/login" method="post" class="">
                                     <div class="p-5">
-                                        <h2 class="fw-normal mb-5">Login</h2>
+                                        <h2 class="fw-normal mb-5" id="login_title">Login</h2>
                                         {% with messages = get_flashed_messages(category_filter=['login']) %}
                                             {% if messages %}
                                             <div class="alert alert-danger" role="alert">
@@ -91,18 +92,17 @@
 
                                         <div class="mb-4 pb-2 mb-md-0 pb-md-0">
                                             <div class="form-group">
-                                                <input type="text" name="email" class="form-control form-control-lg">
-                                                <label for="email">Email:</label>
+                                                <input type="text" name="email" class="form-control" placeholder="Enter email">
                                             </div>
                                         </div>
 
                                         <div class="mb-4 pb-2 mb-md-0 pb-md-0">
                                             <div class="form-group">
-                                                <input type="password" name="password" class="form-control form-control-lg">
-                                                <label for="password">Password:</label>
+                                                <input type="password" name="password" class="form-control" placeholder="Enter password">
+                                                
                                             </div>
                                         </div>
-                                        <input type="submit" value="Login" class="btn btn-success">
+                                        <input type="submit" value="Login" class="btn btn-primary">
                                     </div>
                                 </form>
                             </div>
